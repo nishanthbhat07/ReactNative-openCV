@@ -1,0 +1,2 @@
+ninja: Entering directory `N:\Full stack Development\Native\opencvReact12\android\opencv\.cxx\cmake\debug\x86_64'
+ninja: no work to do.

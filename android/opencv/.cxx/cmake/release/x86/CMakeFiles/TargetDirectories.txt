@@ -1,0 +1,3 @@
+N:/Full stack Development/Native/opencvReact12/android/opencv/.cxx/cmake/release/x86/CMakeFiles/opencv_jni_shared.dir
+N:/Full stack Development/Native/opencvReact12/android/opencv/.cxx/cmake/release/x86/CMakeFiles/edit_cache.dir
+N:/Full stack Development/Native/opencvReact12/android/opencv/.cxx/cmake/release/x86/CMakeFiles/rebuild_cache.dir
