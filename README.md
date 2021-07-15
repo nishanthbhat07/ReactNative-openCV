@@ -7,4 +7,4 @@ Process flow diagram -
 <img src="dfd.png"/>
 
 Demo -
-<iframe src="Demo.gif"></iframe>
+![demo-video](Demo.gif)
