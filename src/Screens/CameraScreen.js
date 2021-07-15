@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   Image,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import {RNCamera as Camera} from 'react-native-camera';
@@ -19,11 +20,14 @@ export default class CameraScreen extends Component {
     super(props);
 
     this.takePicture = this.takePicture.bind(this);
+
     this.checkForBlurryImage = this.checkForBlurryImage.bind(this);
     this.proceedWithCheckingBlurryImage =
       this.proceedWithCheckingBlurryImage.bind(this);
     this.repeatPhoto = this.repeatPhoto.bind(this);
-    this.usePhoto = this.usePhoto.bind(this);
+    // this.usePhoto = this.usePhoto.bind(this);
+    this.meanBlur = this.meanBlur.bind(this);
+    this.doSomethingWithBlur = this.doSomethingWithBlur.bind(this);
     this.state = {
       cameraPermission: false,
       photoAsBase64: {
@@ -104,8 +108,42 @@ export default class CameraScreen extends Component {
     });
   }
 
-  usePhoto() {
-    // do something, e.g. navigate
+  meanBlur(imageAsBase64) {
+    return new Promise((resolve, reject) => {
+      console.log('OPENCV:\n', OpenCV);
+      if (Platform.OS === 'android') {
+        OpenCV.meanBlurMethod(
+          imageAsBase64,
+          error => {
+            // error handling
+            console.log('[MEAN BLUR FUNC ERR!]', error);
+          },
+          msg => {
+            console.log(msg);
+            resolve(msg);
+          },
+        );
+      } else {
+        OpenCV.meanBlurMethod(imageAsBase64, (error, dataArray) => {
+          resolve(dataArray[0]);
+        });
+      }
+    });
+  }
+  //proceedWithMeanBlurMethod
+  doSomethingWithBlur() {
+    const {content, photoPath} = this.state.photoAsBase64;
+    this.meanBlur(content)
+      .then(blurryPhoto => {
+        if (blurryPhoto) {
+          console.log('TRUE YAYY');
+        } else {
+          console.log('FALSE NOO');
+        }
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   }
 
   render() {
@@ -119,17 +157,49 @@ export default class CameraScreen extends Component {
             }}
             style={styles.imagePreview}
           />
-          <View style={styles.repeatPhotoContainer}>
-            <TouchableOpacity onPress={this.repeatPhoto}>
-              <Text style={styles.photoPreviewRepeatPhotoText}>
-                Repeat photo
-              </Text>
-            </TouchableOpacity>
-          </View>
           <View style={styles.usePhotoContainer}>
-            <TouchableOpacity onPress={this.usePhoto}>
-              <Text style={styles.photoPreviewUsePhotoText}>Use photo</Text>
-            </TouchableOpacity>
+            <ScrollView horizontal={true}>
+              <View>
+                <TouchableOpacity onPress={this.repeatPhoto}>
+                  <Text style={styles.photoPreviewRepeatPhotoText}>
+                    Retake photo
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity onPress={this.doSomethingWithBlur}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>Crop</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
         </View>
       );
