@@ -95,48 +95,57 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
       errorCallback.invoke(e.getMessage());
     }
   }
-
+  public int safeLongToInt(long l) {
+    if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+        throw new IllegalArgumentException
+            (l + " cannot be cast to int without changing its value.");
+    }
+    return (int) l;
+}
   @ReactMethod
-  public void meanBlurMethod(
-    String imageAsBase64,
-    Callback errorCallback,
-    Callback successCallback
-  ) {
-    //ImageView ivImage, ivImageProcessed;
-    Mat src;
+    public void meanBlurMethod(String imageAsBase64, Callback errorCallback, Callback successCallback){
+        System.out.println("Entering java func");
+        //ImageView ivImage, ivImageProcessed;
+        Mat src;
+        
+        try {
 
-    try {
-      //loaded the binary image string
-      BitmapFactory.Options options = new BitmapFactory.Options();
-      options.inDither = true;
-      options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            //loaded the binary image string
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inDither = true;
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-      byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
-      Bitmap image = BitmapFactory.decodeByteArray(
-        decodedString,
-        0,
-        decodedString.length
-      );
+            byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+            Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            
+            src = new Mat(image.getHeight(),image.getWidth(),CvType.CV_8UC1);
+            Utils.bitmapToMat(image,src);
+            System.out.println("123 JAVA");
+            Imgproc.blur(src,src,new Size(3,3));
 
-      src = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC1);
+            Bitmap processedImage = Bitmap.createBitmap(src.cols(),src.rows(),Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(src,processedImage);
+            // ivImage.setImageBitmap(selectedImage);
+            // ivImageProcessed.setImageBitmap(processedImage);
+            
+            //APPROACH 1
+            // int length = (int) (src.total()*src.elemSize());
+            // byte buffer[] = new byte[length];
+            // int converted = src.get(0, 0, buffer);
+        
+            //APPROACH 2
+            byte[] imageInBytes = new byte[(safeLongToInt(src.total())) * src.channels()];
+            src.get(0, 0, imageInBytes);
+            String s=java.util.Base64.getEncoder().encodeToString(imageInBytes);
+            System.out.println(s);
+            successCallback.invoke(s);
+        
+        }catch(Exception e){
 
-      Utils.bitmapToMat(image, src);
+            errorCallback.invoke(e.getMessage());
+        }
 
-      Imgproc.blur(src, src, new Size(3, 3));
-      // mat to base64
+       
 
-      Bitmap processedImage = Bitmap.createBitmap(
-        src.cols(),
-        src.rows(),
-        Bitmap.Config.ARGB_8888
-      );
-      Utils.matToBitmap(src, processedImage);
-      // ivImage.setImageBitmap(selectedImage);
-      // ivImageProcessed.setImageBitmap(processedImage);
-
-      successCallback.invoke(processedImage != null);
-    } catch (Exception e) {
-      errorCallback.invoke("error in java code");
     }
   }
-}

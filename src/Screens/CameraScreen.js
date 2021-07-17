@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import {
   AppRegistry,
@@ -119,7 +120,7 @@ export default class CameraScreen extends Component {
             console.log('[MEAN BLUR FUNC ERR!]', error);
           },
           msg => {
-            console.log(msg);
+            console.log('Line 122', msg);
             resolve(msg);
           },
         );
@@ -133,13 +134,16 @@ export default class CameraScreen extends Component {
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
     const {content, photoPath} = this.state.photoAsBase64;
+    console.log('137', content);
     this.meanBlur(content)
       .then(blurryPhoto => {
-        if (blurryPhoto) {
-          console.log('TRUE YAYY');
-        } else {
-          console.log('FALSE NOO');
-        }
+        console.log('[PHOTO CONTENT]: ', blurryPhoto);
+        this.setState({
+          photoAsBase64: {
+            ...this.state.photoAsBase64,
+            content: blurryPhoto,
+          },
+        });
       })
       .catch(err => {
         console.log('err', err);
