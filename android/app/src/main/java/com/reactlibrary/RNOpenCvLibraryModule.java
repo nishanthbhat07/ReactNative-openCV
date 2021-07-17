@@ -8,15 +8,30 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import java.util.logging.Logger;
+import com.facebook.react.bridge.Promise;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import org.opencv.imgcodecs.Imgcodecs;
+
+
+
+
 public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
+  private String TAG="APP";
 
   public RNOpenCvLibraryModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -34,6 +49,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     Callback errorCallback,
     Callback successCallback
   ) {
+
     try {
       BitmapFactory.Options options = new BitmapFactory.Options();
       options.inDither = true;
@@ -102,50 +118,67 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     }
     return (int) l;
 }
-  @ReactMethod
-    public void meanBlurMethod(String imageAsBase64, Callback errorCallback, Callback successCallback){
-        System.out.println("Entering java func");
+    @ReactMethod
+    public void meanBlurMethod(String imageAsBase64, Callback errorCallback,
+    Callback successCallback){
+     Log.d(TAG,imageAsBase64);
+    Log.d(TAG,"OpenCv MBM Line 111");
         //ImageView ivImage, ivImageProcessed;
-        Mat src;
+        Mat src=new Mat();
+        System.out.println("Entering java func");
+        int DELAY_CAPTION = 1500;
+        int DELAY_BLUR = 100;
+        int MAX_KERNEL_LENGTH = 31;
         
-        try {
-
-            //loaded the binary image string
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inDither = true;
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-            byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
-            Bitmap image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            
-            src = new Mat(image.getHeight(),image.getWidth(),CvType.CV_8UC1);
-            Utils.bitmapToMat(image,src);
-            System.out.println("123 JAVA");
-            Imgproc.blur(src,src,new Size(3,3));
-
-            Bitmap processedImage = Bitmap.createBitmap(src.cols(),src.rows(),Bitmap.Config.ARGB_8888);
-            Utils.matToBitmap(src,processedImage);
-            // ivImage.setImageBitmap(selectedImage);
-            // ivImageProcessed.setImageBitmap(processedImage);
-            
-            //APPROACH 1
-            // int length = (int) (src.total()*src.elemSize());
-            // byte buffer[] = new byte[length];
-            // int converted = src.get(0, 0, buffer);
-        
-            //APPROACH 2
-            byte[] imageInBytes = new byte[(safeLongToInt(src.total())) * src.channels()];
-            src.get(0, 0, imageInBytes);
-            String s=java.util.Base64.getEncoder().encodeToString(imageInBytes);
-            System.out.println(s);
-            successCallback.invoke(s);
-        
-        }catch(Exception e){
-
-            errorCallback.invoke(e.getMessage());
-        }
-
+        //ImageView ivImage, ivImageProcessed;
+          Mat dst;
+  
+        try{
+          Log.d(TAG,"136");
+          BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDither = true;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        // byte[] decoded = Base64.getDecoder().decode(imageAsBase64);
+          
+        byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+        // Mat mat = Imgcodecs.imdecode(new MatOfByte(decodedString), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+        // Mat mat = new Mat(width, height, CvType.CV_8UC3);
+        // mat.put(0, 0, decodedString);
+        Bitmap image = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
        
+        Utils.bitmapToMat(image, src);
+        
+        dst = new Mat(src.rows(), src.cols(), src.type());
+        
+        Imgproc.GaussianBlur(src, dst, new Size(15,15), 0);
+  
+        //Applying GaussianBlur on the Image
+        // for (int i = 1; i < MAX_KERNEL_LENGTH; i = i + 2) {
+          
+        // }
+  
+  
+        Bitmap finalImage = Bitmap.createBitmap(dst.cols(),
+        dst.rows(), Bitmap.Config.RGB_565);
+        Utils.matToBitmap(dst, finalImage);
+        Bitmap bitmap = (Bitmap) finalImage;
+        bitmap = Bitmap.createScaledBitmap(bitmap, 600, 450, false);
 
+  
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        
+        
+        //byte[] img = dst.data().get(byte[].class);
+        Log.d(TAG,encoded.toString());
+        Log.d(TAG,"str"+encoded);
+        successCallback.invoke(encoded);
+  
+        }catch(Exception e){
+          Log.e(TAG,"error "+e.getStackTrace());
+            errorCallback.invoke(e.getStackTrace().toString());
+        }
     }
   }
