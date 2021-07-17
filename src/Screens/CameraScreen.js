@@ -86,6 +86,7 @@ export default class CameraScreen extends Component {
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
+      /* console.log('[DATA]', data);*/
       this.setState({
         ...this.state,
         photoAsBase64: {
@@ -109,9 +110,8 @@ export default class CameraScreen extends Component {
     });
   }
 
-  meanBlur(imageAsBase64) {
+  meanBlur = imageAsBase64 => {
     return new Promise((resolve, reject) => {
-      console.log('OPENCV:\n', OpenCV);
       if (Platform.OS === 'android') {
         OpenCV.meanBlurMethod(
           imageAsBase64,
@@ -119,9 +119,9 @@ export default class CameraScreen extends Component {
             // error handling
             console.log('[MEAN BLUR FUNC ERR!]', error);
           },
-          msg => {
-            console.log('Line 122', msg);
-            resolve(msg);
+          s => {
+            console.log('Line 122', s);
+            resolve(s);
           },
         );
       } else {
@@ -130,11 +130,11 @@ export default class CameraScreen extends Component {
         });
       }
     });
-  }
+  };
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
     const {content, photoPath} = this.state.photoAsBase64;
-    console.log('137', content);
+    console.log(photoPath);
     this.meanBlur(content)
       .then(blurryPhoto => {
         console.log('[PHOTO CONTENT]: ', blurryPhoto);
@@ -155,6 +155,7 @@ export default class CameraScreen extends Component {
       return (
         <View style={styles.container}>
           <Toast ref="toast" position="center" />
+          {/** PREVIEW */}
           <Image
             source={{
               uri: `data:image/png;base64,${this.state.photoAsBase64.content}`,
