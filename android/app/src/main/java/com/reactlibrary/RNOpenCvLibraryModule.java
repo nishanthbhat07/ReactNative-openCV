@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Core;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -181,4 +182,65 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
             errorCallback.invoke(e.getStackTrace().toString());
         }
     }
+
+    @ReactMethod
+    public void addContrastMethod(String imageAsBase64, Callback errorCallback,
+    Callback successCallback){
+    Log.d(TAG,"OpenCv MBM Line 111");
+        //ImageView ivImage, ivImageProcessed;
+        Mat src=new Mat();
+        System.out.println("Entering java func");
+        int alpha = 2;
+        int beta = 25;
+        
+        //ImageView ivImage, ivImageProcessed;
+          Mat dst;
+  
+        try{
+          BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDither = true;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+          
+        byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+
+        Bitmap image = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+       
+        Utils.bitmapToMat(image, src);
+        
+        dst = new Mat(src.rows(), src.cols(), src.type());
+
+          
+        Log.d(TAG,dst.toString());
+        Log.d(TAG,"Line 218"+dst);
+        //increase contrast
+        src.convertTo(dst, -1, alpha, beta);
+
+        Log.d(TAG,dst.toString());
+        Log.d(TAG,"Line 223"+dst);
+
+        Bitmap finalContrastImage = Bitmap.createBitmap(dst.cols(),
+        dst.rows(), Bitmap.Config.RGB_565);
+
+        Utils.matToBitmap(dst, finalContrastImage);
+        Bitmap bitmap = (Bitmap) finalContrastImage;
+        bitmap = Bitmap.createScaledBitmap(bitmap, 600, 450, false);
+
+  
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        
+        
+        //byte[] img = dst.data().get(byte[].class);
+        successCallback.invoke(encoded);
+  
+        }catch(Exception e){
+          Log.e(TAG,"error "+e.getStackTrace());
+            errorCallback.invoke(e.getStackTrace().toString());
+        }
+    }
   }
+
+

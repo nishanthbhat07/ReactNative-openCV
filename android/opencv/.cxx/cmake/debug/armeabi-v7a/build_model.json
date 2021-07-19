@@ -5,9 +5,9 @@
     "environmentVariables": []
   },
   "cmake": {
-    "cmakeArtifactsBaseFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
-    "cmakeServerLogFile": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a\\cmake_server_log.txt",
-    "cmakeWrappingBaseFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cxx\\debug\\armeabi-v7a",
+    "cmakeArtifactsBaseFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
+    "cmakeServerLogFile": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a\\cmake_server_log.txt",
+    "cmakeWrappingBaseFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cxx\\debug\\armeabi-v7a",
     "effectiveConfiguration": {
       "name": "traditional-android-studio-cmake-environment",
       "description": "Composite reified CMakeSettings configuration",
@@ -15,13 +15,13 @@
       "inheritEnvironments": [
         "ndk"
       ],
-      "buildRoot": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
-      "cmakeToolchain": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake",
-      "cmakeExecutable": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
+      "buildRoot": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
+      "cmakeToolchain": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake",
+      "cmakeExecutable": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
       "variables": [
         {
           "name": "CMAKE_FIND_ROOT_PATH",
-          "value": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\prefab\\armeabi-v7a\\prefab"
+          "value": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\prefab\\armeabi-v7a\\prefab"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
@@ -29,7 +29,7 @@
         },
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake"
+          "value": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake"
         },
         {
           "name": "ANDROID_ABI",
@@ -37,7 +37,7 @@
         },
         {
           "name": "ANDROID_NDK",
-          "value": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944"
+          "value": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944"
         },
         {
           "name": "ANDROID_PLATFORM",
@@ -49,7 +49,7 @@
         },
         {
           "name": "CMAKE_ANDROID_NDK",
-          "value": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944"
+          "value": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944"
         },
         {
           "name": "CMAKE_EXPORT_COMPILE_COMMANDS",
@@ -57,11 +57,11 @@
         },
         {
           "name": "CMAKE_LIBRARY_OUTPUT_DIRECTORY",
-          "value": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\build\\intermediates\\cmake\\debug\\obj\\armeabi-v7a"
+          "value": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\build\\intermediates\\cmake\\debug\\obj\\armeabi-v7a"
         },
         {
           "name": "CMAKE_MAKE_PROGRAM",
-          "value": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
+          "value": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
         },
         {
           "name": "CMAKE_SYSTEM_NAME",
@@ -78,14 +78,14 @@
       ]
     }
   },
-  "cxxBuildFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
+  "cxxBuildFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
   "info": {
     "abi": "ARMEABI_V7A",
     "bitness": 32,
     "deprecated": false,
     "default": true
   },
-  "originalCxxBuildFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
+  "originalCxxBuildFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\armeabi-v7a",
   "variant": {
     "buildSystemArgumentList": [
       "-DANDROID_STL\u003dc++_shared"
@@ -101,24 +101,24 @@
     "module": {
       "buildSystem": "CMAKE",
       "cmake": {
-        "cmakeExe": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
+        "cmakeExe": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\cmake.exe",
         "minimumCmakeVersion": "3.10.2",
-        "ninjaExe": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
+        "ninjaExe": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe"
       },
-      "cmakeToolchainFile": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake",
-      "cxxFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx",
+      "cmakeToolchainFile": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake",
+      "cxxFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx",
       "gradleModulePathName": ":opencv",
-      "intermediatesFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\build\\intermediates",
-      "makeFile": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\libcxx_helper\\CMakeLists.txt",
-      "moduleBuildFile": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\build.gradle",
-      "moduleRootFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv",
+      "intermediatesFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\build\\intermediates",
+      "makeFile": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\libcxx_helper\\CMakeLists.txt",
+      "moduleBuildFile": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\build.gradle",
+      "moduleRootFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv",
       "ndkDefaultAbiList": [
         "ARMEABI_V7A",
         "ARM64_V8A",
         "X86",
         "X86_64"
       ],
-      "ndkFolder": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944",
+      "ndkFolder": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944",
       "ndkMetaAbiList": [
         {
           "abi": "ARMEABI_V7A",
@@ -175,29 +175,29 @@
       "ndkDefaultStl": "LIBCXX_STATIC",
       "ndkVersion": "20.1.5948944",
       "project": {
-        "compilerSettingsCacheFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\.cxx",
-        "cxxFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\.cxx",
+        "compilerSettingsCacheFolder": "D:\\Projects\\ReactNative-openCV\\android\\.cxx",
+        "cxxFolder": "D:\\Projects\\ReactNative-openCV\\android\\.cxx",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
-        "rootBuildGradleFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android",
-        "sdkFolder": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk",
+        "rootBuildGradleFolder": "D:\\Projects\\ReactNative-openCV\\android",
+        "sdkFolder": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk",
         "isPrefabEnabled": false
       },
       "splitsAbiFilterSet": [],
       "stlSharedObjectMap": {
         "LIBCXX_SHARED": {
-          "ARMEABI_V7A": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
-          "ARM64_V8A": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
-          "X86": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
-          "X86_64": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
+          "ARMEABI_V7A": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
+          "ARM64_V8A": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
+          "X86": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
+          "X86_64": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
         },
         "LIBCXX_STATIC": {},
         "NONE": {},
         "SYSTEM": {}
       }
     },
-    "objFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\build\\intermediates\\cmake\\debug\\obj",
+    "objFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\build\\intermediates\\cmake\\debug\\obj",
     "variantName": "debug",
     "validAbiList": [
       "ARMEABI_V7A",
@@ -205,8 +205,8 @@
       "X86",
       "X86_64"
     ],
-    "prefabDirectory": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\prefab",
+    "prefabDirectory": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\prefab",
     "prefabPackageDirectoryList": []
   },
-  "prefabFolder": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\.cxx\\cmake\\debug\\prefab\\armeabi-v7a"
+  "prefabFolder": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\.cxx\\cmake\\debug\\prefab\\armeabi-v7a"
 }

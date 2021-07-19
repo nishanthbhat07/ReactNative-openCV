@@ -29,6 +29,9 @@ export default class CameraScreen extends Component {
     // this.usePhoto = this.usePhoto.bind(this);
     this.meanBlur = this.meanBlur.bind(this);
     this.doSomethingWithBlur = this.doSomethingWithBlur.bind(this);
+
+    this.addContrastMethod = this.addContrastMethod.bind(this)
+    this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this)
     this.state = {
       cameraPermission: false,
       photoAsBase64: {
@@ -150,6 +153,47 @@ export default class CameraScreen extends Component {
       });
   }
 
+  addContrastMethod = imageAsBase64 => {
+    return new Promise((resolve, reject) => {
+      if (Platform.OS === 'android') {
+        OpenCV.addContrastMethod(
+          imageAsBase64,
+          error => {
+            // error handling
+            console.log('[MEAN BLUR FUNC ERR!]', error);
+          },
+          s => {
+            console.log('Line 122', s);
+            resolve(s);
+          }
+        );
+      } else {
+        OpenCV.addContrastMethod(imageAsBase64, (error, dataArray) => {
+          resolve(dataArray[0]);
+        });
+      }
+    });
+  }
+
+  //onclick js method for adding contrast
+  proceedWithContrastMethod() {
+    const {content, photoPath} = this.state.photoAsBase64;
+    console.log(photoPath);
+    this.addContrastMethod(content)
+      .then(blurryPhoto => {
+        console.log('[PHOTO CONTENT]: ', blurryPhoto);
+        this.setState({
+          photoAsBase64: {
+            ...this.state.photoAsBase64,
+            content: blurryPhoto,
+          },
+        });
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  }
+
   render() {
     if (this.state.photoAsBase64.isPhotoPreview) {
       return (
@@ -178,8 +222,8 @@ export default class CameraScreen extends Component {
               </View>
 
               <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>Crop</Text>
+                <TouchableOpacity onPress={this.proceedWithContrastMethod}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Contrast</Text>
                 </TouchableOpacity>
               </View>
 

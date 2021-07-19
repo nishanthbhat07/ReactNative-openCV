@@ -1,21 +1,21 @@
-                Executable : C:\Users\nisha\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\cmake.exe
+                Executable : C:\Users\gatij\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\cmake.exe
 arguments : 
--HN:\Full stack Development\Native\opencvReact12\android\opencv\libcxx_helper
--DCMAKE_FIND_ROOT_PATH=N:\Full stack Development\Native\opencvReact12\android\opencv\.cxx\cmake\debug\prefab\x86_64\prefab
+-HD:\Projects\ReactNative-openCV\android\opencv\libcxx_helper
+-DCMAKE_FIND_ROOT_PATH=D:\Projects\ReactNative-openCV\android\opencv\.cxx\cmake\debug\prefab\x86_64\prefab
 -DCMAKE_BUILD_TYPE=Debug
--DCMAKE_TOOLCHAIN_FILE=C:\Users\nisha\AppData\Local\Android\Sdk\ndk\20.1.5948944\build\cmake\android.toolchain.cmake
+-DCMAKE_TOOLCHAIN_FILE=C:\Users\gatij\AppData\Local\Android\Sdk\ndk\20.1.5948944\build\cmake\android.toolchain.cmake
 -DANDROID_ABI=x86_64
--DANDROID_NDK=C:\Users\nisha\AppData\Local\Android\Sdk\ndk\20.1.5948944
+-DANDROID_NDK=C:\Users\gatij\AppData\Local\Android\Sdk\ndk\20.1.5948944
 -DANDROID_PLATFORM=android-21
 -DCMAKE_ANDROID_ARCH_ABI=x86_64
--DCMAKE_ANDROID_NDK=C:\Users\nisha\AppData\Local\Android\Sdk\ndk\20.1.5948944
+-DCMAKE_ANDROID_NDK=C:\Users\gatij\AppData\Local\Android\Sdk\ndk\20.1.5948944
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
--DCMAKE_LIBRARY_OUTPUT_DIRECTORY=N:\Full stack Development\Native\opencvReact12\android\opencv\build\intermediates\cmake\debug\obj\x86_64
--DCMAKE_MAKE_PROGRAM=C:\Users\nisha\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=D:\Projects\ReactNative-openCV\android\opencv\build\intermediates\cmake\debug\obj\x86_64
+-DCMAKE_MAKE_PROGRAM=C:\Users\gatij\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
 -DCMAKE_SYSTEM_NAME=Android
 -DCMAKE_SYSTEM_VERSION=21
 -DANDROID_STL=c++_shared
--BN:\Full stack Development\Native\opencvReact12\android\opencv\.cxx\cmake\debug\x86_64
+-BD:\Projects\ReactNative-openCV\android\opencv\.cxx\cmake\debug\x86_64
 -GNinja
 jvmArgs : 
 

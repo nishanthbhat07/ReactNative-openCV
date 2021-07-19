@@ -1,7 +1,7 @@
 [
 {
-  "directory": "N:/Full stack Development/Native/opencvReact12/android/opencv/.cxx/cmake/debug/x86",
-  "command": "C:\\Users\\nisha\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=i686-none-linux-android21 --gcc-toolchain=C:/Users/nisha/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/nisha/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/sysroot    -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\opencv_jni_shared.dir\\dummy.cpp.o -c \"N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\libcxx_helper\\dummy.cpp\"",
-  "file": "N:\\Full stack Development\\Native\\opencvReact12\\android\\opencv\\libcxx_helper\\dummy.cpp"
+  "directory": "D:/Projects/ReactNative-openCV/android/opencv/.cxx/cmake/debug/x86",
+  "command": "C:\\Users\\gatij\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=i686-none-linux-android21 --gcc-toolchain=C:/Users/gatij/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/gatij/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/sysroot    -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\opencv_jni_shared.dir\\dummy.cpp.o -c D:\\Projects\\ReactNative-openCV\\android\\opencv\\libcxx_helper\\dummy.cpp",
+  "file": "D:\\Projects\\ReactNative-openCV\\android\\opencv\\libcxx_helper\\dummy.cpp"
 }
 ]
