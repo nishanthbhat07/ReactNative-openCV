@@ -14,6 +14,10 @@ target 'opencvReact12' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'opencvReact12Tests' do
     inherit! :complete
     # Pods for testing

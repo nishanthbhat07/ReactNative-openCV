@@ -3,6 +3,8 @@ package com.opencvreact12;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+import com.horcrux.svg.SvgPackage;
 import com.horcrux.svg.SvgPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
@@ -35,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new SafeAreaContextPackage(),
                     new SvgPackage(),
                     new RNCameraPackage(),
                     new RNOpenCvLibraryPackage()
@@ -77,6 +80,8 @@ public class MainApplication extends Application implements ReactApplication {
             Log.d("OpenCv", "Error while init");
         }
     }
+
+
 
     public void onResume()
     {
