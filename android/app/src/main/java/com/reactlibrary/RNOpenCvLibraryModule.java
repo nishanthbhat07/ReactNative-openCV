@@ -184,14 +184,13 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void addContrastMethod(String imageAsBase64, Callback errorCallback,
+    public void addContrastMethod(String imageAsBase64, int alpha ,Callback errorCallback,
     Callback successCallback){
     Log.d(TAG,"OpenCv MBM Line 111");
         //ImageView ivImage, ivImageProcessed;
         Mat src=new Mat();
         System.out.println("Entering java func");
-        int alpha = 2;
-        int beta = 25;
+        int beta = 0;
         
         //ImageView ivImage, ivImageProcessed;
           Mat dst;
@@ -210,14 +209,8 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         
         dst = new Mat(src.rows(), src.cols(), src.type());
 
-          
-        Log.d(TAG,dst.toString());
-        Log.d(TAG,"Line 218"+dst);
         //increase contrast
         src.convertTo(dst, -1, alpha, beta);
-
-        Log.d(TAG,dst.toString());
-        Log.d(TAG,"Line 223"+dst);
 
         Bitmap finalContrastImage = Bitmap.createBitmap(dst.cols(),
         dst.rows(), Bitmap.Config.RGB_565);
@@ -226,7 +219,6 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         Bitmap bitmap = (Bitmap) finalContrastImage;
         bitmap = Bitmap.createScaledBitmap(bitmap, 600, 450, false);
 
-  
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();

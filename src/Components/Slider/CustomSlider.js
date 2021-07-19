@@ -6,23 +6,24 @@ import {
   Text,
   Box,
 } from "native-base"
- const CustomSlider = () => {
-  const [onChangeValue, setOnChangeValue] = React.useState(70)
-  const [onChangeEndValue, setOnChangeEndValue] = React.useState(70)
+ const CustomSlider = (props) => {
+  const {onChangeValue, onSliderChange} = props
+//   const [onChangeEndValue, setOnChangeEndValue] = React.useState(70)
   return (
     <Stack mx={5} space={4} alignItems="center" w="100%">
 
       <Box mx={5} w="250">
         <Slider
-          defaultValue={70}
+          defaultValue={onChangeValue}
           colorScheme="cyan"
           onChange={(v) => {
-            setOnChangeValue(Math.floor(v))
-            console.log(v)
+            console.log(v, 'Line 21')
+            onSliderChange(v/30 + 1)
           }}
-          onChangeEnd={(v) => {
-            v && setOnChangeEndValue(Math.floor(v))
-          }}
+        //   onChangeEnd={(v) => {
+        //     v && setOnChangeEndValue(Math.floor(v))
+        //     console.log(onChangeEndValue)
+        //   }}
         >
           <Slider.Track>
             <Slider.FilledTrack />
