@@ -189,7 +189,6 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     Log.d(TAG,"OpenCv MBM Line 111");
         //ImageView ivImage, ivImageProcessed;
         Mat src=new Mat();
-        System.out.println("Entering java func");
         int beta = 0;
         
         //ImageView ivImage, ivImageProcessed;

@@ -156,13 +156,13 @@ export default class CameraScreen extends Component {
   };
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
-    const {content, photoPath} = this.state.photoAsBase64;
+    const {content, photoPath} = this.state.currentPhotoAsBase64;
 
     this.meanBlur(content)
       .then(blurryPhoto => {
         this.setState({
-          photoAsBase64: {
-            ...this.state.photoAsBase64,
+          currentPhotoAsBase64: {
+            ...this.state.currentPhotoAsBase64,
             content: blurryPhoto,
           },
         });
@@ -196,7 +196,7 @@ export default class CameraScreen extends Component {
 
   //onclick js method for adding contrast
   proceedWithContrastMethod() {
-    const {content, photoPath} = this.state.photoAsBase64;
+    const {content} = this.state.photoAsBase64;
     this.setState({
       ...this.state,
       modalState: 'flex',
@@ -254,59 +254,53 @@ export default class CameraScreen extends Component {
           />
           <View style={styles.usePhotoContainer}>
             <View style={{display: this.state.modalState}}>
-              <CustomSlider />
-
-              <View style={{display: this.state.modalState}}>
-                <CustomSlider
-                  onChangeValue={this.state.onChangeValue}
-                  onSliderChange={this.onSliderChange}
-                />
-              </View>
-              <ScrollView horizontal={true}>
-                <View>
-                  <TouchableOpacity onPress={this.repeatPhoto}>
-                    <Text style={styles.photoPreviewRepeatPhotoText}>
-                      Retake photo
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity onPress={this.doSomethingWithBlur}>
-                    <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View>
-                  <TouchableOpacity onPress={this.onPressSlider}>
-                    <Text style={styles.photoPreviewUsePhotoText}>
-                      Contrast
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View>
-                  <TouchableOpacity>
-                    <Text style={styles.photoPreviewUsePhotoText}>
-                      Brightness
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity>
-                    <Text style={styles.photoPreviewUsePhotoText}>
-                      Brightness
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity>
-                    <Text style={styles.photoPreviewUsePhotoText}>
-                      Brightness
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </ScrollView>
+              <CustomSlider
+                onChangeValue={this.state.onChangeValue}
+                onSliderChange={this.onSliderChange}
+              />
             </View>
+            <ScrollView horizontal={true}>
+              <View>
+                <TouchableOpacity onPress={this.repeatPhoto}>
+                  <Text style={styles.photoPreviewRepeatPhotoText}>
+                    Retake photo
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity onPress={this.doSomethingWithBlur}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <TouchableOpacity onPress={this.onPressSlider}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Contrast</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Text style={styles.photoPreviewUsePhotoText}>
+                    Brightness
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
         </View>
       );
