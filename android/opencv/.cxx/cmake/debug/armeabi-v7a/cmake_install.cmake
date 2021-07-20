@@ -1,4 +1,4 @@
-# Install script for directory: D:/Projects/ReactNative-openCV/android/opencv/libcxx_helper
+# Install script for directory: N:/Full stack Development/Native/opencvReact12/android/opencv/libcxx_helper
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Projects/ReactNative-openCV/android/opencv/.cxx/cmake/debug/armeabi-v7a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "N:/Full stack Development/Native/opencvReact12/android/opencv/.cxx/cmake/debug/armeabi-v7a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

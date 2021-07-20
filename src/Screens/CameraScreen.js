@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { Component, useState } from 'react';
+import React, {Component, useState} from 'react';
 import {
   AppRegistry,
   View,
@@ -9,13 +9,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { RNCamera as Camera } from 'react-native-camera';
-import Toast, { DURATION } from 'react-native-easy-toast';
+import {RNCamera as Camera} from 'react-native-camera';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 import styles from '../Styles/Screens/CameraScreen';
 import OpenCV from '../NativeModules/OpenCV';
 import CircleWithinCircle from '../assets/svg/CircleWithinCircle';
-import CustomSlider from '../Components/Slider/CustomSlider'
+import CustomSlider from '../Components/Slider/CustomSlider';
 
 export default class CameraScreen extends Component {
   constructor(props) {
@@ -31,8 +31,8 @@ export default class CameraScreen extends Component {
     this.meanBlur = this.meanBlur.bind(this);
     this.doSomethingWithBlur = this.doSomethingWithBlur.bind(this);
 
-    this.addContrastMethod = this.addContrastMethod.bind(this)
-    this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this)
+    this.addContrastMethod = this.addContrastMethod.bind(this);
+    this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this);
     this.state = {
       cameraPermission: false,
       photoAsBase64: {
@@ -65,7 +65,7 @@ export default class CameraScreen extends Component {
   }
 
   proceedWithCheckingBlurryImage() {
-    const { content, photoPath } = this.state.photoAsBase64;
+    const {content, photoPath} = this.state.photoAsBase64;
 
     this.checkForBlurryImage(content)
       .then(blurryPhoto => {
@@ -89,7 +89,7 @@ export default class CameraScreen extends Component {
 
   async takePicture() {
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
+      const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
       /* console.log('[DATA]', data);*/
       this.setState({
@@ -138,7 +138,7 @@ export default class CameraScreen extends Component {
   };
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
-    const { content, photoPath } = this.state.photoAsBase64;
+    const {content, photoPath} = this.state.photoAsBase64;
     console.log(photoPath);
     this.meanBlur(content)
       .then(blurryPhoto => {
@@ -167,7 +167,7 @@ export default class CameraScreen extends Component {
           s => {
             console.log('Line 122', s);
             resolve(s);
-          }
+          },
         );
       } else {
         OpenCV.addContrastMethod(imageAsBase64, (error, dataArray) => {
@@ -175,15 +175,15 @@ export default class CameraScreen extends Component {
         });
       }
     });
-  }
+  };
 
   //onclick js method for adding contrast
   proceedWithContrastMethod() {
-    const { content, photoPath } = this.state.photoAsBase64;
+    const {content, photoPath} = this.state.photoAsBase64;
     this.setState({
       ...this.state,
-      modalState: 'flex'
-    })
+      modalState: 'flex',
+    });
     console.log(this.state.modalState);
     this.addContrastMethod(content)
       .then(blurryPhoto => {
@@ -213,7 +213,7 @@ export default class CameraScreen extends Component {
             style={styles.imagePreview}
           />
           <View style={styles.usePhotoContainer}>
-            <View style={{ display:  this.state.modalState , marginBottom: '10px' }}>
+            <View style={{display: this.state.modalState}}>
               <CustomSlider />
             </View>
             <ScrollView horizontal={true}>
@@ -257,7 +257,6 @@ export default class CameraScreen extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-
             </ScrollView>
           </View>
         </View>

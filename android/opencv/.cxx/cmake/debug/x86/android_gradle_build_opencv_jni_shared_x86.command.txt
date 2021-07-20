@@ -1,7 +1,7 @@
-Executable : C:\Users\gatij\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
+Executable : C:\Users\nisha\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
 arguments : 
 -C
-D:\Projects\ReactNative-openCV\android\opencv\.cxx\cmake\debug\x86
+N:\Full stack Development\Native\opencvReact12\android\opencv\.cxx\cmake\debug\x86
 opencv_jni_shared
 jvmArgs : 
 
