@@ -21,8 +21,9 @@ export default class CameraScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.takePicture = this.takePicture.bind(this);
+    this.onChangeValue = 1;
 
+    this.takePicture = this.takePicture.bind(this);
     this.checkForBlurryImage = this.checkForBlurryImage.bind(this);
     this.proceedWithCheckingBlurryImage =
       this.proceedWithCheckingBlurryImage.bind(this);
@@ -33,6 +34,12 @@ export default class CameraScreen extends Component {
 
     this.addContrastMethod = this.addContrastMethod.bind(this);
     this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this);
+
+    this.addContrastMethod = this.addContrastMethod.bind(this);
+    this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this);
+    this.onSliderChange = this.onSliderChange.bind(this);
+    this.onPressSlider = this.onPressSlider.bind(this);
+
     this.state = {
       cameraPermission: false,
       photoAsBase64: {
@@ -40,7 +47,14 @@ export default class CameraScreen extends Component {
         isPhotoPreview: false,
         photoPath: '',
       },
+      currentPhotoAsBase64: {
+        content: '',
+        isPhotoPreview: false,
+        photoPath: '',
+      },
       modalState: 'none',
+      sliderType: 'none',
+      onChangeValue: 0,
     };
   }
 
@@ -99,6 +113,11 @@ export default class CameraScreen extends Component {
           isPhotoPreview: false,
           photoPath: data.uri,
         },
+        currentPhotoAsBase64: {
+          content: data.base64,
+          isPhotoPreview: false,
+          photoPath: data.uri,
+        },
       });
       this.proceedWithCheckingBlurryImage();
     }
@@ -125,7 +144,6 @@ export default class CameraScreen extends Component {
             console.log('[MEAN BLUR FUNC ERR!]', error);
           },
           s => {
-            console.log('Line 122', s);
             resolve(s);
           },
         );
@@ -139,10 +157,9 @@ export default class CameraScreen extends Component {
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
     const {content, photoPath} = this.state.photoAsBase64;
-    console.log(photoPath);
+
     this.meanBlur(content)
       .then(blurryPhoto => {
-        console.log('[PHOTO CONTENT]: ', blurryPhoto);
         this.setState({
           photoAsBase64: {
             ...this.state.photoAsBase64,
@@ -155,22 +172,22 @@ export default class CameraScreen extends Component {
       });
   }
 
-  addContrastMethod = imageAsBase64 => {
+  addContrastMethod = (content, onChangeValue) => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
         OpenCV.addContrastMethod(
-          imageAsBase64,
+          content,
+          onChangeValue,
           error => {
             // error handling
             console.log('[MEAN BLUR FUNC ERR!]', error);
           },
           s => {
-            console.log('Line 122', s);
             resolve(s);
           },
         );
       } else {
-        OpenCV.addContrastMethod(imageAsBase64, (error, dataArray) => {
+        OpenCV.addContrastMethod(content, onChangeValue, (error, dataArray) => {
           resolve(dataArray[0]);
         });
       }
@@ -185,12 +202,12 @@ export default class CameraScreen extends Component {
       modalState: 'flex',
     });
     console.log(this.state.modalState);
-    this.addContrastMethod(content)
+
+    this.addContrastMethod(content, this.onChangeValue)
       .then(blurryPhoto => {
-        console.log('[PHOTO CONTENT]: ', blurryPhoto);
         this.setState({
-          photoAsBase64: {
-            ...this.state.photoAsBase64,
+          currentPhotoAsBase64: {
+            ...this.state.currentPhotoAsBase64,
             content: blurryPhoto,
           },
         });
@@ -200,6 +217,29 @@ export default class CameraScreen extends Component {
       });
   }
 
+  onSliderChange = value => {
+    this.setState({
+      ...this.state,
+      onChangeValue: value,
+    });
+    this.onChangeValue = value;
+    this.proceedWithContrastMethod();
+  };
+
+  onPressSlider = () => {
+    if (this.state.modalState === 'flex') {
+      this.setState({
+        ...this.state,
+        modalState: 'none',
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        modalState: 'flex',
+      });
+    }
+  };
+
   render() {
     if (this.state.photoAsBase64.isPhotoPreview) {
       return (
@@ -208,56 +248,65 @@ export default class CameraScreen extends Component {
           {/** PREVIEW */}
           <Image
             source={{
-              uri: `data:image/png;base64,${this.state.photoAsBase64.content}`,
+              uri: `data:image/png;base64,${this.state.currentPhotoAsBase64.content}`,
             }}
             style={styles.imagePreview}
           />
           <View style={styles.usePhotoContainer}>
             <View style={{display: this.state.modalState}}>
               <CustomSlider />
+
+              <View style={{display: this.state.modalState}}>
+                <CustomSlider
+                  onChangeValue={this.state.onChangeValue}
+                  onSliderChange={this.onSliderChange}
+                />
+              </View>
+              <ScrollView horizontal={true}>
+                <View>
+                  <TouchableOpacity onPress={this.repeatPhoto}>
+                    <Text style={styles.photoPreviewRepeatPhotoText}>
+                      Retake photo
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity onPress={this.doSomethingWithBlur}>
+                    <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <TouchableOpacity onPress={this.onPressSlider}>
+                    <Text style={styles.photoPreviewUsePhotoText}>
+                      Contrast
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <TouchableOpacity>
+                    <Text style={styles.photoPreviewUsePhotoText}>
+                      Brightness
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity>
+                    <Text style={styles.photoPreviewUsePhotoText}>
+                      Brightness
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity>
+                    <Text style={styles.photoPreviewUsePhotoText}>
+                      Brightness
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
             </View>
-            <ScrollView horizontal={true}>
-              <View>
-                <TouchableOpacity onPress={this.repeatPhoto}>
-                  <Text style={styles.photoPreviewRepeatPhotoText}>
-                    Retake photo
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity onPress={this.doSomethingWithBlur}>
-                  <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <TouchableOpacity onPress={this.proceedWithContrastMethod}>
-                  <Text style={styles.photoPreviewUsePhotoText}>Contrast</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>
-                    Brightness
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>
-                    Brightness
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>
-                    Brightness
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
           </View>
         </View>
       );
