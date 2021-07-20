@@ -23,6 +23,8 @@ export default class CameraScreen extends Component {
     super(props);
 
     this.onChangeValue = 1;
+    this.onBriVal = 0;
+    this.onBlur = 0;
 
     this.takePicture = this.takePicture.bind(this);
     this.checkForBlurryImage = this.checkForBlurryImage.bind(this);
@@ -40,6 +42,9 @@ export default class CameraScreen extends Component {
     this.proceedWithContrastMethod = this.proceedWithContrastMethod.bind(this);
     this.onSliderChange = this.onSliderChange.bind(this);
     this.onPressSlider = this.onPressSlider.bind(this);
+    this.proceedWithBrightnessMethod =
+      this.proceedWithBrightnessMethod.bind(this);
+    this.addBrightnessMethod = this.addBrightnessMethod.bind(this);
 
     this.state = {
       cameraPermission: false,
@@ -55,9 +60,13 @@ export default class CameraScreen extends Component {
       },
       modalState: 'none',
       sliderType: 'none',
+      modalBrightness: 'none',
+      modalBlur: 'none',
       onChangeValue: 0,
       screenHeight: Dimensions.get('window').height,
       screenWidth: Dimensions.get('window').width,
+      bri_val: 0,
+      blur_val: 0,
     };
   }
 
@@ -138,12 +147,13 @@ export default class CameraScreen extends Component {
     });
   }
 
-  meanBlur = (imageAsBase64, height, width) => {
+  meanBlur = (imageAsBase64, blur_val, height, width) => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
         console.log('HEIGHT & WIDTH', height, ' ', width);
         OpenCV.meanBlurMethod(
           imageAsBase64,
+          blur_val,
           height,
           width,
           error => {
@@ -168,10 +178,63 @@ export default class CameraScreen extends Component {
   };
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
-    const {content} = this.state.currentPhotoAsBase64;
+    const {content} = this.state.photoAsBase64;
     const height = this.state.screenHeight;
     const width = this.state.screenWidth;
-    this.meanBlur(content, height, width)
+    this.meanBlur(content, this.onBlur, height, width)
+      .then(blurryPhoto => {
+        this.setState({
+          currentPhotoAsBase64: {
+            ...this.state.currentPhotoAsBase64,
+            content: blurryPhoto,
+          },
+        });
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  }
+
+  addBrightnessMethod = (content, onBrival, height, width) => {
+    return new Promise((resolve, reject) => {
+      if (Platform.OS === 'android') {
+        OpenCV.addBrightnessMethod(
+          content,
+          onBrival,
+          height,
+          width,
+          error => {
+            // error handling
+            console.log('[contrast BLUR FUNC ERR!]', error);
+          },
+          s => {
+            resolve(s);
+          },
+        );
+      } else {
+        OpenCV.addBrightnessMethod(
+          content,
+          onBrival,
+          height,
+          width,
+          (error, dataArray) => {
+            resolve(dataArray[0]);
+          },
+        );
+      }
+    });
+  };
+  proceedWithBrightnessMethod() {
+    const {content} = this.state.photoAsBase64;
+    const height = this.state.screenHeight;
+    const width = this.state.screenWidth;
+    // this.setState({
+    //   ...this.state,
+    //   modalBrightness: 'flex',
+    // });
+    console.log('Brightness', this.state.modalBrightness);
+
+    this.addBrightnessMethod(content, this.onBriVal, height, width)
       .then(blurryPhoto => {
         this.setState({
           currentPhotoAsBase64: {
@@ -241,26 +304,76 @@ export default class CameraScreen extends Component {
       });
   }
 
-  onSliderChange = value => {
-    this.setState({
-      ...this.state,
-      onChangeValue: value,
-    });
-    this.onChangeValue = value;
-    this.proceedWithContrastMethod();
+  onSliderChange = (value, type) => {
+    switch (type) {
+      case 'contrast':
+        this.setState({
+          ...this.state,
+          onChangeValue: value,
+        });
+        this.onChangeValue = value;
+        this.proceedWithContrastMethod();
+        break;
+      case 'brightness':
+        this.setState({
+          ...this.state,
+          bri_val: value,
+        });
+        this.onBriVal = value;
+        this.proceedWithBrightnessMethod();
+        break;
+      case 'blur':
+        this.setState({
+          ...this.state,
+          blur_val: value,
+        });
+        this.onBlur = value;
+        this.doSomethingWithBlur();
+        break;
+    }
   };
 
-  onPressSlider = () => {
-    if (this.state.modalState === 'flex') {
-      this.setState({
-        ...this.state,
-        modalState: 'none',
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        modalState: 'flex',
-      });
+  onPressSlider = type => {
+    switch (type) {
+      case 'brightness':
+        if (this.state.modalBrightness === 'flex') {
+          this.setState({
+            ...this.state,
+            modalBrightness: 'none',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            modalBrightness: 'flex',
+          });
+        }
+        break;
+      case 'contrast':
+        if (this.state.modalState === 'flex') {
+          this.setState({
+            ...this.state,
+            modalState: 'none',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            modalState: 'flex',
+          });
+        }
+        break;
+      case 'blur':
+        if (this.state.modalBlur === 'flex') {
+          this.setState({
+            ...this.state,
+            modalBlur: 'none',
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            modalBlur: 'flex',
+          });
+        }
+        break;
     }
   };
 
@@ -279,7 +392,22 @@ export default class CameraScreen extends Component {
           <View style={styles.usePhotoContainer}>
             <View style={{display: this.state.modalState}}>
               <CustomSlider
+                type={`contrast`}
                 onChangeValue={this.state.onChangeValue}
+                onSliderChange={this.onSliderChange}
+              />
+            </View>
+            <View style={{display: this.state.modalBrightness}}>
+              <CustomSlider
+                type={`brightness`}
+                onChangeValue={this.state.bri_val}
+                onSliderChange={this.onSliderChange}
+              />
+            </View>
+            <View style={{display: this.state.modalBlur}}>
+              <CustomSlider
+                type={`blur`}
+                onChangeValue={this.state.blur_val}
                 onSliderChange={this.onSliderChange}
               />
             </View>
@@ -292,19 +420,21 @@ export default class CameraScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity onPress={this.doSomethingWithBlur}>
+                <TouchableOpacity onPress={() => this.onPressSlider('blur')}>
                   <Text style={styles.photoPreviewUsePhotoText}>Blur</Text>
                 </TouchableOpacity>
               </View>
 
               <View>
-                <TouchableOpacity onPress={this.onPressSlider}>
+                <TouchableOpacity
+                  onPress={() => this.onPressSlider('contrast')}>
                   <Text style={styles.photoPreviewUsePhotoText}>Contrast</Text>
                 </TouchableOpacity>
               </View>
 
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.onPressSlider('brightness')}>
                   <Text style={styles.photoPreviewUsePhotoText}>
                     Brightness
                   </Text>

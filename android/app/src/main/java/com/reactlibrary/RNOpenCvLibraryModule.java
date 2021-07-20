@@ -121,7 +121,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     return (int) l;
 }
     @ReactMethod
-    public void meanBlurMethod(String imageAsBase64,int height,int width, Callback errorCallback,
+    public void meanBlurMethod(String imageAsBase64,int blur,int height,int width, Callback errorCallback,
     Callback successCallback){
      Log.d(TAG,imageAsBase64);
     Log.d(TAG,"OpenCv MBM Line 111");
@@ -150,7 +150,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         
         dst = new Mat(src.rows(), src.cols(), src.type());
         
-        Imgproc.GaussianBlur(src, dst, new Size(15,15), 0);
+        Imgproc.GaussianBlur(src, dst, new Size(blur,blur), 0);
         Core.rotate(dst, dst, Core.ROTATE_90_CLOCKWISE );
         //Applying GaussianBlur on the Image
         // for (int i = 1; i < MAX_KERNEL_LENGTH; i = i + 2) {
@@ -177,7 +177,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         successCallback.invoke(encoded);
   
         }catch(Exception e){
-          Log.e(TAG,"error "+e.getStackTrace());
+          Log.e(TAG,"error "+e.toString());
             errorCallback.invoke(e.getStackTrace().toString());
         }
     }
@@ -235,12 +235,12 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         }
     }
     @ReactMethod
-    public void addBrightnessMethod(String imageAsBase64, int alpha ,Callback errorCallback,
+    public void addBrightnessMethod(String imageAsBase64, int beta,int height,int width ,Callback errorCallback,
     Callback successCallback){
     Log.d(TAG,"OpenCv MBM Line 111");
         //ImageView ivImage, ivImageProcessed;
         Mat src=new Mat();
-        int beta = 0;
+        int alpha = 2;
         
         //ImageView ivImage, ivImageProcessed;
           Mat dst;
@@ -259,15 +259,15 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         
         dst = new Mat(src.rows(), src.cols(), src.type());
 
-        //increase contrast
+        //increase brightness
         src.convertTo(dst, -1, alpha, beta);
-
+        Core.rotate(dst, dst, Core.ROTATE_90_CLOCKWISE);
         Bitmap finalContrastImage = Bitmap.createBitmap(dst.cols(),
         dst.rows(), Bitmap.Config.RGB_565);
 
         Utils.matToBitmap(dst, finalContrastImage);
         Bitmap bitmap = (Bitmap) finalContrastImage;
-        bitmap = Bitmap.createScaledBitmap(bitmap, 600, 450, false);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
