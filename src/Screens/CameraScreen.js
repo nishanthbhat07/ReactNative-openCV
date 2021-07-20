@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {RNCamera as Camera} from 'react-native-camera';
 import Toast, {DURATION} from 'react-native-easy-toast';
@@ -55,6 +56,8 @@ export default class CameraScreen extends Component {
       modalState: 'none',
       sliderType: 'none',
       onChangeValue: 0,
+      screenHeight: Dimensions.get('window').height,
+      screenWidth: Dimensions.get('window').width,
     };
   }
 
@@ -105,7 +108,8 @@ export default class CameraScreen extends Component {
     if (this.camera) {
       const options = {quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
-      /* console.log('[DATA]', data);*/
+      console.log('[DATA]', data);
+
       this.setState({
         ...this.state,
         photoAsBase64: {
@@ -134,11 +138,14 @@ export default class CameraScreen extends Component {
     });
   }
 
-  meanBlur = imageAsBase64 => {
+  meanBlur = (imageAsBase64, height, width) => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
+        console.log('HEIGHT & WIDTH', height, ' ', width);
         OpenCV.meanBlurMethod(
           imageAsBase64,
+          height,
+          width,
           error => {
             // error handling
             console.log('[MEAN BLUR FUNC ERR!]', error);
@@ -148,17 +155,23 @@ export default class CameraScreen extends Component {
           },
         );
       } else {
-        OpenCV.meanBlurMethod(imageAsBase64, (error, dataArray) => {
-          resolve(dataArray[0]);
-        });
+        OpenCV.meanBlurMethod(
+          imageAsBase64,
+          height,
+          width,
+          (error, dataArray) => {
+            resolve(dataArray[0]);
+          },
+        );
       }
     });
   };
   //proceedWithMeanBlurMethod
   doSomethingWithBlur() {
-    const {content, photoPath} = this.state.currentPhotoAsBase64;
-
-    this.meanBlur(content)
+    const {content} = this.state.currentPhotoAsBase64;
+    const height = this.state.screenHeight;
+    const width = this.state.screenWidth;
+    this.meanBlur(content, height, width)
       .then(blurryPhoto => {
         this.setState({
           currentPhotoAsBase64: {
@@ -172,24 +185,33 @@ export default class CameraScreen extends Component {
       });
   }
 
-  addContrastMethod = (content, onChangeValue) => {
+  addContrastMethod = (content, onChangeValue, height, width) => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
+        console.log('HEIGHT & WIDTH', height, ' ', width);
         OpenCV.addContrastMethod(
           content,
           onChangeValue,
+          height,
+          width,
           error => {
             // error handling
-            console.log('[MEAN BLUR FUNC ERR!]', error);
+            console.log('[contrast BLUR FUNC ERR!]', error);
           },
           s => {
             resolve(s);
           },
         );
       } else {
-        OpenCV.addContrastMethod(content, onChangeValue, (error, dataArray) => {
-          resolve(dataArray[0]);
-        });
+        OpenCV.addContrastMethod(
+          content,
+          onChangeValue,
+          height,
+          width,
+          (error, dataArray) => {
+            resolve(dataArray[0]);
+          },
+        );
       }
     });
   };
@@ -197,13 +219,15 @@ export default class CameraScreen extends Component {
   //onclick js method for adding contrast
   proceedWithContrastMethod() {
     const {content} = this.state.photoAsBase64;
+    const height = this.state.screenHeight;
+    const width = this.state.screenWidth;
     this.setState({
       ...this.state,
       modalState: 'flex',
     });
     console.log(this.state.modalState);
 
-    this.addContrastMethod(content, this.onChangeValue)
+    this.addContrastMethod(content, this.onChangeValue, height, width)
       .then(blurryPhoto => {
         this.setState({
           currentPhotoAsBase64: {

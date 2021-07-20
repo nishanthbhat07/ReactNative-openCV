@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Core;
@@ -120,7 +121,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     return (int) l;
 }
     @ReactMethod
-    public void meanBlurMethod(String imageAsBase64, Callback errorCallback,
+    public void meanBlurMethod(String imageAsBase64,int height,int width, Callback errorCallback,
     Callback successCallback){
      Log.d(TAG,imageAsBase64);
     Log.d(TAG,"OpenCv MBM Line 111");
@@ -139,12 +140,10 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
           BitmapFactory.Options options = new BitmapFactory.Options();
         options.inDither = true;
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        // byte[] decoded = Base64.getDecoder().decode(imageAsBase64);
+        
           
         byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
-        // Mat mat = Imgcodecs.imdecode(new MatOfByte(decodedString), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
-        // Mat mat = new Mat(width, height, CvType.CV_8UC3);
-        // mat.put(0, 0, decodedString);
+      
         Bitmap image = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
        
         Utils.bitmapToMat(image, src);
@@ -152,7 +151,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         dst = new Mat(src.rows(), src.cols(), src.type());
         
         Imgproc.GaussianBlur(src, dst, new Size(15,15), 0);
-  
+        Core.rotate(dst, dst, Core.ROTATE_90_CLOCKWISE );
         //Applying GaussianBlur on the Image
         // for (int i = 1; i < MAX_KERNEL_LENGTH; i = i + 2) {
           
@@ -160,10 +159,10 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
   
   
         Bitmap finalImage = Bitmap.createBitmap(dst.cols(),
-        dst.rows(), Bitmap.Config.RGB_565);
+        dst.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(dst, finalImage);
         Bitmap bitmap = (Bitmap) finalImage;
-        bitmap = Bitmap.createScaledBitmap(bitmap, 600, 450, false);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width,height, false);
 
   
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -184,7 +183,59 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void addContrastMethod(String imageAsBase64, int alpha ,Callback errorCallback,
+    public void addContrastMethod(String imageAsBase64, int alpha ,int height, int width,Callback errorCallback, 
+    Callback successCallback){
+      
+    Log.d(TAG,"OpenCv MBM Line 111");
+        //ImageView ivImage, ivImageProcessed;
+        Mat src=new Mat();
+        int beta = 0;
+        
+        //ImageView ivImage, ivImageProcessed;
+          Mat dst;
+  
+        try{
+          BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDither = true;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+        Bitmap image = BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+       
+        Utils.bitmapToMat(image, src);
+        Log.d(TAG,src.rows()+" line 208"+src.cols());
+        dst = new Mat(src.rows(), src.cols(), src.type());
+
+        //increase contrast
+        
+        src.convertTo(dst, -1, alpha, beta);
+        
+        Core.rotate(dst, dst, Core.ROTATE_90_CLOCKWISE);
+       
+        Log.d(TAG,dst.rows()+" line 213 "+dst.cols());
+        Bitmap finalContrastImage = Bitmap.createBitmap(
+        dst.cols(),dst.rows(),Bitmap.Config.ARGB_8888);
+
+        Log.d(TAG,dst.rows()+" line 219 "+dst.cols());
+        Utils.matToBitmap(dst, finalContrastImage);
+        Bitmap bitmap = (Bitmap) finalContrastImage;
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        
+        
+        //byte[] img = dst.data().get(byte[].class);
+        successCallback.invoke(encoded);
+  
+        }catch(Exception e){
+          Log.e(TAG,"error "+e.getStackTrace());
+            errorCallback.invoke(e.getStackTrace().toString());
+        }
+    }
+    @ReactMethod
+    public void addBrightnessMethod(String imageAsBase64, int alpha ,Callback errorCallback,
     Callback successCallback){
     Log.d(TAG,"OpenCv MBM Line 111");
         //ImageView ivImage, ivImageProcessed;
