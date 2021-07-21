@@ -37,6 +37,8 @@ export default class CameraScreen extends Component {
     this.onSliderChange = this.onSliderChange.bind(this)
     this.onPressSlider = this.onPressSlider.bind(this)
 
+
+
     this.state = {
       cameraPermission: false,
       photoAsBase64: {
@@ -134,7 +136,7 @@ export default class CameraScreen extends Component {
   meanBlur = imageAsBase64 => {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
-        OpenCV.meanBlurMethod(
+        OpenCV.borderDetection(
           imageAsBase64,
           error => {
             // error handling
@@ -145,7 +147,7 @@ export default class CameraScreen extends Component {
           },
         );
       } else {
-        OpenCV.meanBlurMethod(imageAsBase64, (error, dataArray) => {
+        OpenCV.borderDetection(imageAsBase64, (error, dataArray) => {
           resolve(dataArray[0]);
         });
       }
@@ -157,8 +159,8 @@ export default class CameraScreen extends Component {
     this.meanBlur(content)
       .then(blurryPhoto => {
         this.setState({
-          photoAsBase64: {
-            ...this.state.photoAsBase64,
+          currentPhotoAsBase64: {
+            ...this.state.currentPhotoAsBase64,
             content: blurryPhoto,
           },
         });
@@ -231,6 +233,7 @@ export default class CameraScreen extends Component {
     }
   }
 
+  
   render() {
     if (this.state.photoAsBase64.isPhotoPreview) {
       return (
