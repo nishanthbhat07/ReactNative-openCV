@@ -73,16 +73,19 @@ export default class CameraScreen extends Component {
     };
   }
 
-  onUpload = async () => {
+  onUpload = () => {
     const {content} = this.state.currentPhotoAsBase64;
-    const res = await fetch('192.168.1.8:5000/api/image/upload', {
+    fetch('http://192.168.137.1:5000/api/image/upload/', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({content}),
-    }).catch(e => console.log(e));
-    console.log(res.message);
+      body: JSON.stringify({content: `data:image/png;base64,${content}`}),
+    })
+      .then(res => res.json())
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+    // console.log(res.json());
   };
 
   checkForBlurryImage(imageAsBase64) {
