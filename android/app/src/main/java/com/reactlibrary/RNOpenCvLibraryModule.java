@@ -283,6 +283,88 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
             errorCallback.invoke(e.getStackTrace().toString());
         }
     }
+
+    // @ReactMethod
+    // public void processContour(String imageAsBase64, int height,int width,Callback errorCallback, Callback successCallback)throws ExecutionException, InterruptedException{
+    //     Mat src = new Mat();
+    //     Mat srcOrig;
+    //     Integer scaleFactor;
+
+    //     try {
+    //         BitmapFactory.Options options = new BitmapFactory.Options();
+    //         options.inDither = true;
+    //         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+    //         byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+    //         Log.d(TAG,"LINE 195 :" + decodedString.toString());
+
+    //         Bitmap selectedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    //         Log.d(TAG,"LINE 198 :");
+    //         srcOrig = new Mat(selectedImage.getHeight(), selectedImage.getWidth(), CvType.CV_8UC4);
+    //         Utils.bitmapToMat(selectedImage, srcOrig);
+    //         Log.d(TAG,"LINE 201 :");
+    //         scaleFactor = calcScaleFactor(srcOrig.rows(), srcOrig.cols());
+    //         Log.d(TAG,"LINE 203 :");
+    //         Imgproc.resize(srcOrig, src, new Size(srcOrig.rows() / scaleFactor, srcOrig.cols() / scaleFactor));
+    //         Log.d(TAG,"LINE 205 :");
+
+    //         Bitmap bitmap = (Bitmap) selectedImage;
+    //         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
+    //         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    //         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+    //         byte[] byteArray = byteArrayOutputStream.toByteArray();
+    //         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+    //         successCallback.invoke(encoded);
+    //         // successCallback.invoke(byteArray);
+
+    //     }catch (Exception e){
+    //         Log.e(TAG," STACK TRACE :"+e.getStackTrace().toString());
+    //     }
+
+    // }
+
+
+    // @ReactMethod
+    // public void RemoveBackground(String imageAsBase64, int height,int width,Callback errorCallback, Callback successCallback){
+    //   Mat src = new Mat();
+    //     Mat srcOrig;
+    //     Integer scaleFactor;
+
+    //     try {
+    //         BitmapFactory.Options options = new BitmapFactory.Options();
+    //         options.inDither = true;
+    //         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+    //         byte[] decodedString = Base64.decode(imageAsBase64, Base64.DEFAULT);
+    //         Log.d(TAG,"LINE 195 :" + decodedString.toString());
+
+    //         Bitmap selectedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    //         Log.d(TAG,"LINE 198 :");
+    //         srcOrig = new Mat(selectedImage.getHeight(), selectedImage.getWidth(), CvType.CV_8UC4);
+    //         Utils.bitmapToMat(selectedImage, srcOrig);
+    //         Log.d(TAG,"LINE 201 :");
+    //         scaleFactor = calcScaleFactor(srcOrig.rows(), srcOrig.cols());
+    //         Log.d(TAG,"LINE 203 :");
+    //         Imgproc.resize(srcOrig, src, new Size(srcOrig.rows() / scaleFactor, srcOrig.cols() / scaleFactor));
+    //         Log.d(TAG,"LINE 205 :");
+
+    //         Bitmap bitmap = (Bitmap) selectedImage;
+    //         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
+    //         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    //         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+    //         byte[] byteArray = byteArrayOutputStream.toByteArray();
+    //         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+    //         successCallback.invoke(encoded);
+    //         // successCallback.invoke(byteArray);
+
+    //     }catch (Exception e){
+    //         Log.e(TAG," STACK TRACE :"+e.getStackTrace().toString());
+    //     }   
+    // }
   }
 
 

@@ -45,6 +45,7 @@ export default class CameraScreen extends Component {
     this.proceedWithBrightnessMethod =
       this.proceedWithBrightnessMethod.bind(this);
     this.addBrightnessMethod = this.addBrightnessMethod.bind(this);
+    this.onUpload = this.onUpload.bind(this);
 
     this.state = {
       cameraPermission: false,
@@ -67,8 +68,22 @@ export default class CameraScreen extends Component {
       screenWidth: Dimensions.get('window').width,
       bri_val: 0,
       blur_val: 0,
+      undoStack: [],
+      redoStack: [],
     };
   }
+
+  onUpload = async () => {
+    const {content} = this.state.currentPhotoAsBase64;
+    const res = await fetch('192.168.1.8:5000/api/image/upload', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({content}),
+    }).catch(e => console.log(e));
+    console.log(res.message);
+  };
 
   checkForBlurryImage(imageAsBase64) {
     return new Promise((resolve, reject) => {
@@ -377,6 +392,14 @@ export default class CameraScreen extends Component {
     }
   };
 
+  undo = () => {
+    console.log('undo');
+  };
+
+  redo = () => {
+    console.log('redo');
+  };
+
   render() {
     if (this.state.photoAsBase64.isPhotoPreview) {
       return (
@@ -441,17 +464,18 @@ export default class CameraScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>
-                    Brightness
-                  </Text>
+                <TouchableOpacity onPress={() => this.onUpload()}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Upload</Text>
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity>
-                  <Text style={styles.photoPreviewUsePhotoText}>
-                    Brightness
-                  </Text>
+                <TouchableOpacity onPress={() => this.undo()}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Undo</Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity onPress={() => this.redo()}>
+                  <Text style={styles.photoPreviewUsePhotoText}>Redo</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>
