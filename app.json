@@ -1,18 +1,4 @@
 {
   "name": "opencvReact12",
-  "displayName": "opencvReact12",
-  "expo": {
-    "sdkVersion": "42.0.0",
-    "name": "opencvReact12",
-    "slug": "opencvReact12",
-    "version": "1.0.0",
-    "platforms": ["android"],
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "bundleIdentifier": "com.opencvReact12"
-    },
-    "android": {
-      "package": "com.opencvReact12"
-    }
-  }
+  "displayName": "opencvReact12"
 }
