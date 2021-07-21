@@ -1,4 +1,10 @@
 {
-  "name": "opencvReact12",
-  "displayName": "opencvReact12"
+  "expo": {
+    "name": "opencvReact12",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.opencvreact12",
+      "versionCode": 1
+    }
+  }
 }
