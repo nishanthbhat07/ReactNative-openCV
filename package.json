@@ -10,7 +10,6 @@
     "lint": "eslint --ext .js --ignore-path .gitignore ."
   },
   "dependencies": {
-    "expo": "^42.0.3",
     "native-base": "^3.0.6",
     "react": "17.0.1",
     "react-native": "0.64.2",

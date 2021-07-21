@@ -17,14 +17,14 @@ import styles from '../Styles/Screens/CameraScreen';
 import OpenCV from '../NativeModules/OpenCV';
 import CircleWithinCircle from '../assets/svg/CircleWithinCircle';
 import CustomSlider from '../Components/Slider/CustomSlider';
-// https://expo.io/dashboard/nishanth07/builds/19366c23-cbed-4964-9e7e-2a1fff37588e
+
 export default class CameraScreen extends Component {
   constructor(props) {
     super(props);
 
     this.onChangeValue = 1;
-    this.onBriVal = 1;
-    this.onBlur = 1;
+    this.onBriVal = 0;
+    this.onBlur = 0;
 
     this.takePicture = this.takePicture.bind(this);
     this.checkForBlurryImage = this.checkForBlurryImage.bind(this);
