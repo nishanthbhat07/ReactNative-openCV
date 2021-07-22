@@ -38,7 +38,7 @@ const CustomSlider = props => {
               colorScheme="rose"
               onChange={v => {
                 console.log(v, 'Line 42');
-                onSliderChange(v * 1.27, 'brightness');
+                onSliderChange(v, 'brightness');
               }}
               //   onChangeEnd={(v) => {
               //     v && setOnChangeEndValue(Math.floor(v))
@@ -54,7 +54,6 @@ const CustomSlider = props => {
         </Stack>
       );
     case 'blur':
-      var x = 0;
       return (
         <Stack mx={5} space={4} alignItems="center" w="100%">
           <Box mx={5} w="250">
@@ -62,11 +61,9 @@ const CustomSlider = props => {
               defaultValue={onChangeValue}
               colorScheme="emerald"
               onChange={v => {
-                if (x < v) x = x + v;
-                else x = x - v;
                 console.log(v, 'Line 65');
 
-                onSliderChange(x, 'blur');
+                onSliderChange(v, 'blur');
               }}
               //   onChangeEnd={(v) => {
               //     v && setOnChangeEndValue(Math.floor(v))

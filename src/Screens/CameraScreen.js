@@ -310,6 +310,9 @@ export default class CameraScreen extends Component {
 
     this.addContrastMethod(content, this.onChangeValue, height, width)
       .then(blurryPhoto => {
+        // this.refs.image.setNativeProps({
+        //   source: [{uri: blurryPhoto}],
+        // });
         this.setState({
           currentPhotoAsBase64: {
             ...this.state.currentPhotoAsBase64,
@@ -410,6 +413,7 @@ export default class CameraScreen extends Component {
           <Toast ref="toast" position="center" />
           {/** PREVIEW */}
           <Image
+            ref={`image`}
             source={{
               uri: `data:image/png;base64,${this.state.currentPhotoAsBase64.content}`,
             }}
