@@ -21,7 +21,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Core;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-
+import java.nio.ByteBuffer;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -219,7 +219,7 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         Utils.matToBitmap(dst, finalContrastImage);
         Bitmap bitmap = (Bitmap) finalContrastImage;
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-
+        
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
@@ -268,10 +268,14 @@ public class RNOpenCvLibraryModule extends ReactContextBaseJavaModule {
         Utils.matToBitmap(dst, finalContrastImage);
         Bitmap bitmap = (Bitmap) finalContrastImage;
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        
+        int size = bitmap.getRowBytes() * bitmap.getHeight();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(size);
+        bitmap.copyPixelsToBuffer(byteBuffer);
+        byte[] byteArray = byteBuffer.array();
+        // ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        // bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        // byte[] byteArray = byteArrayOutputStream.toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         
         

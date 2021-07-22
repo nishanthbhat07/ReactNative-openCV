@@ -366,6 +366,8 @@ export default class CameraScreen extends Component {
           this.setState({
             ...this.state,
             modalBrightness: 'flex',
+            modalState: 'none',
+            modalBlur: 'none',
           });
         }
         break;
@@ -379,6 +381,8 @@ export default class CameraScreen extends Component {
           this.setState({
             ...this.state,
             modalState: 'flex',
+            modalBrightness: 'none',
+            modalBlur: 'none',
           });
         }
         break;
@@ -392,6 +396,8 @@ export default class CameraScreen extends Component {
           this.setState({
             ...this.state,
             modalBlur: 'flex',
+            modalState: 'none',
+            modalBrightness: 'none',
           });
         }
         break;
